@@ -1,5 +1,19 @@
 import bcrypt from 'bcryptjs';
 import db from "../models/index";
+import { resolveInclude } from 'ejs';
+
+const salt = bcrypt.genSaltSync(10);
+
+let hashUserPassword = (password) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let hashPassWord = await bcrypt.hashSync(password, salt);
+            resolve(hashPassWord);
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
 
 let handleUserLogin = (email, password)=>{
     return new Promise(async(resolve, reject)=>{
@@ -87,7 +101,64 @@ let getAllUsers = (userId) =>{
         }
     })
 }
+
+let createNewUser = (data) =>{
+    return new Promise(async(resolve, reject)=>{
+        try {
+            //check email existed
+            let check = await checkUserEmail(data.email);
+            if (check ===true){
+                resolve({
+                    errCode: 1,
+                    message:'existed'
+                })
+            }
+            else{
+            let hashPassWordFromBcrypt = await hashUserPassword(data.password);
+            await db.User.create({
+                email: data.email,
+                password: hashPassWordFromBcrypt,
+                firstName: data.firstName,
+                lastName: data.lastName,
+                address: data.address,
+                phonenumber: data.phonenumber,
+                gender: data.gender === "1" ? true : false,
+                roleId: data.roleId,
+            })
+        
+            resolve({
+                errCode: 0,
+                message: 'OK'
+            })}
+        } catch (e) {
+            reject(e);
+        }
+    })
+}
+
+let deleteUser = (userId)=>{
+    return new Promise(async(resolve, reject)=>{
+        let user = await db.User.findOne({
+            where:{id: userId}
+        })
+        if (!user){
+            resolve({
+                errCode: 2,
+                errMessage:' The user is not existed'
+            })
+        }
+        await db.User.destroy({
+            where:{id: userId}
+        });
+        resolve({
+            errCode: 0,
+            errMessage: 'deleted!'
+        })
+    })
+}
 module.exports ={
     handleUserLogin: handleUserLogin,
     getAllUsers: getAllUsers,
+    createNewUser: createNewUser,
+    deleteUser: deleteUser,
 }
