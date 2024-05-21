@@ -12,10 +12,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      email:{
+      email: {
         type: Sequelize.STRING
       },
-      password:{
+      password: {
         type: Sequelize.STRING
       },
       firstName: {
@@ -24,23 +24,23 @@ module.exports = {
       lastName: {
         type: Sequelize.STRING
       },
-      address:{
+      address: {
         type: Sequelize.STRING
       },
       gender: {
-        type: Sequelize.BOOLEAN
-      },
-      roleId:{
         type: Sequelize.STRING
       },
-      phonenumber:{
-        type:Sequelize.STRING
+      roleId: {
+        type: Sequelize.STRING
       },
-      positionId:{
-        type:Sequelize.STRING
+      phonenumber: {
+        type: Sequelize.STRING
       },
-      image:{
-        type:Sequelize.STRING
+      positionId: {
+        type: Sequelize.STRING
+      },
+      image: {
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

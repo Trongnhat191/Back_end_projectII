@@ -1,22 +1,30 @@
+// statusId: DataTypes.STRING,
+//     fieldId: DataTypes.STRING,
+//     customerId: DataTypes.STRING,
+//     date: DataTypes.DATE,
+//     timeType: DataTypes.STRING
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('allcodes', {
+        await queryInterface.createTable('history', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            key: {
+            customerId: {
                 type: Sequelize.STRING
             },
-            type: {
+            fieldId: {
                 type: Sequelize.STRING
             },
-            value: {
-                type: Sequelize.STRING
+            description: {
+                type: Sequelize.TEXT
+            },
+            files: {
+                type: Sequelize.TEXT
             },
             createdAt:{
                 allowNull: false,
@@ -29,6 +37,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('allcodes');
+        await queryInterface.dropTable('history');
     }
 };

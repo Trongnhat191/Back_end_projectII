@@ -1,21 +1,32 @@
+// statusId: DataTypes.STRING,
+//     fieldId: DataTypes.STRING,
+//     customerId: DataTypes.STRING,
+//     date: DataTypes.DATE,
+//     timeType: DataTypes.STRING
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
     async up(queryInterface, Sequelize) {
-        await queryInterface.createTable('allcodes', {
+        await queryInterface.createTable('booking', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            key: {
+            statusId: {
                 type: Sequelize.STRING
             },
-            type: {
+            fieldId: {
                 type: Sequelize.STRING
             },
-            value: {
+            customerId: {
+                type: Sequelize.STRING
+            },
+            date: {
+                type: Sequelize.DATE
+            },
+            timeType: {
                 type: Sequelize.STRING
             },
             createdAt:{
@@ -29,6 +40,6 @@ module.exports = {
         });
     },
     async down(queryInterface, Sequelize) {
-        await queryInterface.dropTable('allcodes');
+        await queryInterface.dropTable('booking');
     }
 };

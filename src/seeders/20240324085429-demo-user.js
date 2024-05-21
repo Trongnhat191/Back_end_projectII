@@ -10,7 +10,7 @@ module.exports = {
       lastName: 'Doe',
       address: 'PhuTho',
       phonenumber:'123456',
-      gender: true,
+      gender: 'Male',
       image:'1',
       roleId:'1',
       positionId:'1',
