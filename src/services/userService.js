@@ -27,7 +27,7 @@ let handleUserLogin = (email, password) => {
                 //comppare password
 
                 let user = await db.User.findOne({
-                    attributes: ['email', 'password'],//chỉ lấy trường thông tin email và password
+                    attributes: ['email','roleId', 'password', 'firstName', 'lastName'],//chỉ lấy trường thông tin email và password
                     where: { email: email }
                 });
 
@@ -36,7 +36,8 @@ let handleUserLogin = (email, password) => {
                     if (check) {
                         userData.errCode = 0;
                         userData.errMessage = "OK",
-                            userData.user = user;
+                        delete user.password;
+                        userData.user = user;
                     }
                     else {
                         userData.errCode = 3;
