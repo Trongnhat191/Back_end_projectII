@@ -33,15 +33,15 @@ module.exports = {
       roleId: {
         type: Sequelize.STRING
       },
-      phonenumber: {
+      phoneNumber: {
         type: Sequelize.STRING
       },
-      positionId: {
-        type: Sequelize.STRING
-      },
-      image: {
-        type: Sequelize.STRING
-      },
+      // positionId: {
+      //   type: Sequelize.STRING
+      // },
+      // image: {
+      //   type: Sequelize.STRING
+      // },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE

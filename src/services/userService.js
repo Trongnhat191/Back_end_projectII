@@ -27,7 +27,7 @@ let handleUserLogin = (email, password) => {
                 //comppare password
 
                 let user = await db.User.findOne({
-                    attributes: ['email','roleId', 'password', 'firstName', 'lastName'],//chỉ lấy trường thông tin email và password
+                    attributes: ['email', 'roleId', 'password', 'firstName', 'lastName'],//chỉ lấy trường thông tin email và password
                     where: { email: email }
                 });
 
@@ -36,7 +36,7 @@ let handleUserLogin = (email, password) => {
                     if (check) {
                         userData.errCode = 0;
                         userData.errMessage = "OK",
-                        delete user.password;
+                            delete user.password;
                         userData.user = user;
                     }
                     else {
@@ -124,9 +124,9 @@ let createNewUser = (data) => {
                     firstName: data.firstName,
                     lastName: data.lastName,
                     address: data.address,
-                    phonenumber: data.phoneNumber,
+                    phoneNumber: data.phoneNumber,
                     gender: data.gender,
-                    roleId: data.role,
+                    roleId: data.roleId,
                 })
 
                 resolve({
@@ -164,6 +164,14 @@ let deleteUser = (userId) => {
 let updateUserData = (data) => {
     return new Promise(async (resolve, reject) => {
         try {
+            if (!data.id|| !data.roleId|| !data.gender) {
+                resolve({
+                    errCode: 2,
+                    errMessage: 'Missing required parameter.....',
+                    data
+                })
+            }
+            // console.log(data.id);
             let user = await db.User.findOne({
                 where: { id: data.id },
                 raw: false
@@ -172,6 +180,9 @@ let updateUserData = (data) => {
                 user.firstName = data.firstName;
                 user.lastName = data.lastName;
                 user.address = data.address;
+                user.phoneNumber = data.phoneNumber;
+                user.roleId = data.roleId;
+                user.gender = date.gender;
                 await user.save();
                 resolve({
                     errCode: 0,
@@ -207,12 +218,12 @@ let getAllCodeServices = (typeInput) => {
                 res.data = allCode;
                 resolve(res);
             }
-        
-            
+
+
         } catch (e) {
-        reject(e);
-    }
-})
+            reject(e);
+        }
+    })
 }
 module.exports = {
     handleUserLogin: handleUserLogin,
